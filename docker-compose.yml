@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    env_file:
+      - ./env/dev.env
+    volumes:
+      - code:/tmp/pgdata
+
+  web:
+    build: .
+    depends_on:
+      - db
+    restart: unless-stopped
+    command: bash -c "python3 manage.py runserver 0.0.0.0:8081"
+    env_file:
+      - ./env/dev.env
+    volumes:
+      - .:/code
+    ports:
+      - "8081:8081"
+    entrypoint: /entrypoint.sh
+    links:
+      - db
+
+  pgadmin:
+    links:
+      - db
+    image: dpage/pgadmin4
+    ports:
+      - "5050:80"
+    env_file:
+      - ./env/dev.env
+    volumes:
+       - code:/root/.pgadmin
+    restart: unless-stopped
+
+volumes:
+    code:
