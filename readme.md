@@ -1,8 +1,8 @@
 **Summary**:
 
 It is written to retrieve navigation data for the last 48 hours for each vehicle using Django Framework and PostgreSQL.
-For the cost problem that will arise due to frequent queries mentioned in the problem, The data requested from the table
-connected with the foreign key with `"select_related"` in Django ORM is retrieved with a single query.
+For the cost problem that will arise due to frequent queries mentioned in the problem (`N+1 select problem`), The data 
+requested from the table connected with the foreign key with `"select_related"` in Django ORM is retrieved with a single query.
 
 **Steps**:
 
